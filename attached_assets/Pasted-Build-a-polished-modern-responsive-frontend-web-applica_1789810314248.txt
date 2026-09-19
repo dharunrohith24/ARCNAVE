@@ -1,0 +1,977 @@
+Build a polished, modern, responsive frontend web application called **ARCNAVE** for my existing AI-based exoplanet classification project.
+
+IMPORTANT:
+I ALREADY HAVE A PYTHON BACKEND AND A TRAINED MACHINE-LEARNING MODEL.
+
+Do NOT recreate, replace, retrain, or modify my existing Random Forest model or backend logic unless absolutely necessary for API integration.
+
+Your primary task is to build the FRONTEND and connect it to my existing backend through REST API endpoints.
+
+Before writing code:
+
+1. Inspect the existing project files.
+2. Identify the existing backend/API structure.
+3. Identify the model prediction endpoint if one already exists.
+4. Identify the expected request and response format.
+5. Reuse the existing backend instead of creating a second backend.
+6. If an API endpoint is not yet available, create only the minimal API wrapper required to expose the existing model. Do not change the model itself.
+
+==================================================
+PROJECT NAME
+============
+
+ARCNAVE
+
+Full concept:
+
+"AI-POWERED EXOPLANET DISCOVERY"
+
+ARCNAVE is an astronomy and machine-learning platform that analyzes Kepler/KOI observations and uses a Random Forest classifier to classify exoplanet candidates.
+
+The frontend should feel like a futuristic scientific space-research platform.
+
+It should NOT look like:
+
+* a generic admin dashboard
+* a normal CRUD application
+* a basic Bootstrap website
+* a childish space-themed website
+
+It should look like:
+
+NASA mission control
++
+deep-space observatory
++
+modern AI research interface
+
+==================================================
+TECH STACK
+==========
+
+Use:
+
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* modern charting library such as Recharts
+* Lucide icons or another clean icon library
+
+Use reusable React components.
+
+Keep the code clean and modular.
+
+==================================================
+VISUAL DESIGN
+=============
+
+Create a premium deep-space visual identity.
+
+Background:
+
+* very dark navy/black
+* subtle star field
+* subtle nebula atmosphere
+* very low-opacity grid
+* subtle moving particles
+
+Accent colors:
+
+* cyan
+* electric blue
+* violet
+* white
+
+Use colors carefully.
+
+Do not make everything glow.
+
+Use glassmorphism selectively:
+
+* translucent dark panels
+* thin borders
+* subtle blur
+* soft shadows
+
+Typography:
+
+* modern sans-serif
+* bold futuristic headings
+* clean readable body text
+* technical labels for scientific values
+
+Overall appearance:
+
+Cinematic
+Scientific
+Minimal
+Premium
+Futuristic
+
+==================================================
+BRAND
+=====
+
+Brand name:
+
+ARCNAVE
+
+Tagline:
+
+"AI-POWERED EXOPLANET DISCOVERY"
+
+Hero headline:
+
+"SEARCH THE SKY.
+FIND THE SIGNAL."
+
+Supporting text:
+
+"Explore Kepler observations and analyze planetary candidates using machine learning."
+
+Create a minimal logo concept based on:
+
+* orbital path
+* planet
+* AI/data signal
+
+Do not use a cartoon-style planet logo.
+
+==================================================
+MAIN NAVIGATION
+===============
+
+Desktop navbar:
+
+ARCNAVE
+
+Mission
+AI Predictor
+Candidate Explorer
+Analytics
+About
+
+Right side:
+
+[ Launch Analysis ]
+
+Mobile:
+
+Hamburger navigation.
+
+Navbar should remain visible or become a polished sticky navigation while scrolling.
+
+==================================================
+PAGE 1 — MISSION / HOME
+=======================
+
+Create a cinematic landing page.
+
+Hero section:
+
+Left side:
+
+Small label:
+
+"ARCNAVE / EXOPLANET INTELLIGENCE"
+
+Large heading:
+
+"SEARCH THE SKY.
+FIND THE SIGNAL."
+
+Description:
+
+"ARCNAVE combines astronomical observations with machine learning to analyze exoplanet candidates and identify patterns hidden inside Kepler data."
+
+Buttons:
+
+[ START AI ANALYSIS ]
+
+[ EXPLORE CANDIDATES ]
+
+Right side:
+
+Create a sophisticated interactive space visualization.
+
+Include:
+
+* star field
+* glowing star
+* orbit rings
+* exoplanet
+* subtle trajectory lines
+* scientific coordinate markers
+* small data labels
+* animated observation points
+
+The visualization should be elegant and not distract from the hero text.
+
+Below hero, create mission statistics.
+
+Use the actual project dataset values where available.
+
+Display:
+
+9,564
+KEPLER OBSERVATIONS
+
+2,746
+CONFIRMED RECORDS
+
+4,839
+FALSE POSITIVE RECORDS
+
+1,979
+CANDIDATE RECORDS
+
+These are dataset statistics, not live NASA statistics.
+
+Do not invent different numbers.
+
+==================================================
+MISSION PIPELINE
+================
+
+Create a section:
+
+"FROM SIGNAL TO CLASSIFICATION"
+
+Display a scientific pipeline:
+
+01
+OBSERVE
+
+02
+EXTRACT
+
+03
+ANALYZE
+
+04
+CLASSIFY
+
+Use connecting orbital/data lines between the steps.
+
+Description:
+
+"ARCNAVE processes observational parameters and sends them through the existing machine-learning classification pipeline."
+
+==================================================
+PAGE 2 — AI PREDICTOR
+=====================
+
+Create the main AI prediction interface.
+
+Title:
+
+"AI EXOPLANET PREDICTOR"
+
+Subtitle:
+
+"Submit observational parameters to the ARCNAVE classification model."
+
+Create a two-column layout.
+
+LEFT:
+
+Observation Input Panel
+
+RIGHT:
+
+AI Analysis Panel
+
+==================================================
+INPUT PARAMETERS
+================
+
+The existing model uses these nine parameters:
+
+koi_period
+koi_time0bk
+koi_duration
+koi_depth
+koi_prad
+koi_model_snr
+koi_steff
+koi_srad
+koi_kepmag
+
+Create friendly labels:
+
+1. Orbital Period
+   Backend field: koi_period
+   Unit: days
+
+2. Transit Reference Time
+   Backend field: koi_time0bk
+   Unit: BKJD
+
+3. Transit Duration
+   Backend field: koi_duration
+   Unit: hours
+
+4. Transit Depth
+   Backend field: koi_depth
+   Unit: ppm
+
+5. Planet Radius
+   Backend field: koi_prad
+   Unit: Earth radii
+
+6. Model Signal-to-Noise Ratio
+   Backend field: koi_model_snr
+
+7. Stellar Effective Temperature
+   Backend field: koi_steff
+   Unit: K
+
+8. Stellar Radius
+   Backend field: koi_srad
+   Unit: Solar radii
+
+9. Kepler Magnitude
+   Backend field: koi_kepmag
+   Unit: mag
+
+Each input should have:
+
+* label
+* unit
+* tooltip
+* scientific field name
+* numeric validation
+* helpful placeholder
+* error state
+
+Do not silently change the submitted values.
+
+==================================================
+PREDICT BUTTON
+==============
+
+Large primary button:
+
+[ ANALYZE CANDIDATE ]
+
+Button animation:
+
+* subtle scanning animation
+* small orbital icon
+* loading state
+
+During request:
+
+"ANALYZING OBSERVATION"
+
+Then:
+
+"RUNNING ARCNAVE CLASSIFIER"
+
+Do not fake the result while waiting.
+
+==================================================
+API INTEGRATION
+===============
+
+Connect the frontend to my EXISTING backend.
+
+First inspect the backend and use its existing API.
+
+If the backend already provides:
+
+POST /predict
+
+use that endpoint.
+
+If the endpoint has a different name, use the existing endpoint.
+
+Do not invent a new prediction protocol when an existing one is available.
+
+The expected prediction input concept is:
+
+{
+"koi_period": number,
+"koi_time0bk": number,
+"koi_duration": number,
+"koi_depth": number,
+"koi_prad": number,
+"koi_model_snr": number,
+"koi_steff": number,
+"koi_srad": number,
+"koi_kepmag": number
+}
+
+Use environment configuration:
+
+VITE_API_BASE_URL
+
+Never hardcode the production backend URL inside components.
+
+Create a dedicated API service such as:
+
+src/services/api.ts
+
+Handle:
+
+* loading
+* success
+* validation errors
+* 400 errors
+* 500 errors
+* network failure
+* backend unavailable
+* malformed response
+
+==================================================
+PREDICTION RESULT
+=================
+
+When the backend returns the result, show a dramatic but professional AI result panel.
+
+For:
+
+CONFIRMED
+
+Display:
+
+CONFIRMED
+
+AI CLASSIFICATION
+
+For:
+
+FALSE POSITIVE
+
+Display:
+
+FALSE POSITIVE
+
+Also display:
+
+CONFIRMED PROBABILITY
+
+Example:
+
+94.2%
+
+Use a circular probability gauge.
+
+Animate the gauge smoothly from 0 to the returned probability.
+
+Also show:
+
+MODEL
+ARCNAVE RANDOM FOREST
+
+CLASSIFICATION
+CONFIRMED / FALSE POSITIVE
+
+PROBABILITY
+returned backend value
+
+IMPORTANT:
+
+Never invent probability values.
+
+Never hardcode example prediction results in production.
+
+Never say:
+
+"Guaranteed planet"
+
+"Definitely an exoplanet"
+
+"Scientifically confirmed by ARCNAVE"
+
+Use:
+
+"AI classification"
+
+or:
+
+"Model prediction"
+
+==================================================
+OBSERVATION SUMMARY
+===================
+
+After prediction, show the submitted nine parameters in a clean scientific table.
+
+Example:
+
+OBSERVATION PARAMETERS
+
+Orbital Period       19.899 days
+Transit Duration     1.78 hours
+Planet Radius        14.6 Earth radii
+...
+
+Use the actual submitted values.
+
+==================================================
+PAGE 3 — CANDIDATE EXPLORER
+===========================
+
+Create:
+
+"CANDIDATE EXPLORER"
+
+This page should allow users to explore the supplied ARCNAVE candidate prediction data.
+
+Candidate dataset fields:
+
+kepid
+koi_disposition
+CONFIRMED_Prob
+AI_Prediction
+
+Create:
+
+Search
+Filter
+Sort
+Pagination
+
+Search:
+
+"Search by KEPID..."
+
+Filters:
+
+ALL
+CONFIRMED
+FALSE POSITIVE
+
+Probability filters:
+
+0–25%
+25–50%
+50–75%
+75–100%
+
+Table columns:
+
+KEPID
+ORIGINAL STATUS
+AI PREDICTION
+CONFIRMED PROBABILITY
+ACTION
+
+Action:
+
+[ VIEW ]
+
+Do not fabricate candidate values.
+
+==================================================
+CANDIDATE DETAIL
+================
+
+Clicking VIEW opens a detailed candidate panel.
+
+Show:
+
+KEPID
+
+Original Status
+
+AI Prediction
+
+CONFIRMED Probability
+
+Probability gauge
+
+Classification explanation
+
+Use wording:
+
+"The candidate was originally labelled CANDIDATE in the supplied dataset. The ARCNAVE model assigned the displayed AI classification and probability."
+
+Do not describe the prediction as independent astronomical confirmation.
+
+==================================================
+AI CONFIRMED CANDIDATES
+=======================
+
+Create a special section:
+
+"AI-CLASSIFIED CONFIRMED CANDIDATES"
+
+The supplied ARCNAVE prediction dataset contains 490 records classified as CONFIRMED by the model.
+
+Display:
+
+490
+
+AI-CLASSIFIED CONFIRMED CANDIDATES
+
+Add:
+
+* searchable table
+* probability sorting
+* probability chart
+* candidate detail view
+
+Do not call these:
+
+"490 confirmed exoplanets"
+
+Use:
+
+"490 candidates classified as CONFIRMED by the ARCNAVE model."
+
+==================================================
+PAGE 4 — ANALYTICS
+==================
+
+Create:
+
+"MISSION ANALYTICS"
+
+Display scientific dashboard cards:
+
+TOTAL OBSERVATIONS
+CONFIRMED
+FALSE POSITIVE
+CANDIDATE
+AI CONFIRMED
+AI FALSE POSITIVE
+
+Charts:
+
+1. Dataset disposition
+
+CONFIRMED
+FALSE POSITIVE
+CANDIDATE
+
+2. AI candidate classification
+
+CONFIRMED
+FALSE POSITIVE
+
+3. CONFIRMED probability distribution
+
+4. Probability bands
+
+0–25%
+25–50%
+50–75%
+75–100%
+
+5. Optional astronomical parameter charts if the backend/data endpoint provides the required data.
+
+Possible charts:
+
+Planet Radius vs Orbital Period
+
+Transit Depth vs Signal-to-Noise
+
+Stellar Temperature Distribution
+
+Kepler Magnitude Distribution
+
+Probability vs Planet Radius
+
+Do not generate fake production data.
+
+==================================================
+DATA VISUALIZATION STYLE
+========================
+
+Charts should use the ARCNAVE space theme.
+
+Use:
+
+* dark chart backgrounds
+* thin grid lines
+* cyan/blue/violet accents
+* clear axis labels
+* tooltips
+* legends
+* responsive sizing
+
+Do not overdecorate charts.
+
+Scientific clarity is more important than visual effects.
+
+==================================================
+PAGE 5 — ABOUT
+==============
+
+Create:
+
+"ABOUT ARCNAVE"
+
+Sections:
+
+MISSION
+
+"ARCNAVE is an AI-assisted platform for exploring astronomical observations and analyzing exoplanet candidates."
+
+DATA
+
+"The project uses Kepler/KOI observations from the supplied NASA Exoplanet Archive dataset."
+
+MODEL
+
+"The classification pipeline uses a Random Forest machine-learning classifier."
+
+FEATURES
+
+Show:
+
+koi_period
+koi_time0bk
+koi_duration
+koi_depth
+koi_prad
+koi_model_snr
+koi_steff
+koi_srad
+koi_kepmag
+
+OUTPUT
+
+CONFIRMED
+
+FALSE POSITIVE
+
+and a CONFIRMED probability.
+
+LIMITATIONS
+
+"ARCNAVE provides machine-learning classifications for research and demonstration purposes. A model prediction is not equivalent to independent astronomical confirmation."
+
+==================================================
+SPACE VISUAL EFFECTS
+====================
+
+Add subtle reusable visual components:
+
+StarField
+OrbitalRing
+NebulaBackground
+DataParticles
+ScanningLine
+PlanetVisualization
+ScientificGrid
+
+Use CSS/canvas where appropriate.
+
+Do not use huge video files.
+
+Keep performance good.
+
+Respect prefers-reduced-motion.
+
+==================================================
+RESPONSIVENESS
+==============
+
+Desktop:
+
+Wide cinematic layouts.
+
+Tablet:
+
+Two-column layouts where possible.
+
+Mobile:
+
+Single-column layout.
+
+Predictor inputs should stack vertically.
+
+Tables should become horizontally scrollable or card-based.
+
+Navigation becomes a hamburger menu.
+
+No horizontal page overflow.
+
+==================================================
+ACCESSIBILITY
+=============
+
+Implement:
+
+* semantic HTML
+* keyboard navigation
+* visible focus
+* accessible labels
+* good contrast
+* aria labels
+* readable error messages
+
+Do not communicate information using color alone.
+
+==================================================
+ERROR / EMPTY STATES
+====================
+
+Create polished states for:
+
+Backend unavailable
+
+"MISSION LINK OFFLINE"
+
+No candidates found
+
+"NO OBSERVATIONS MATCH YOUR FILTERS"
+
+Prediction error
+
+"ANALYSIS INTERRUPTED"
+
+Loading
+
+"ANALYZING SIGNAL..."
+
+Empty chart
+
+"INSUFFICIENT OBSERVATION DATA"
+
+These should be visually consistent with the space theme.
+
+==================================================
+COMPONENT STRUCTURE
+===================
+
+Create reusable components such as:
+
+Navbar
+HeroSection
+StarField
+OrbitalVisualization
+MissionStats
+MissionPipeline
+PredictorForm
+ParameterInput
+PredictionResult
+ProbabilityGauge
+ObservationSummary
+CandidateTable
+CandidateFilters
+CandidateDetail
+AnalyticsCard
+ChartCard
+LoadingState
+ErrorState
+Footer
+
+Separate:
+
+UI components
+API service
+types/interfaces
+data utilities
+state management
+
+==================================================
+IMPORTANT BACKEND RULE
+======================
+
+DO NOT replace my existing backend.
+
+DO NOT retrain the Random Forest.
+
+DO NOT create fake AI logic.
+
+DO NOT hardcode predictions.
+
+DO NOT create a second competing ML pipeline.
+
+Inspect the existing backend first.
+
+Connect the frontend to the existing backend.
+
+If minor API changes are necessary for integration, make the smallest possible changes and explain them.
+
+==================================================
+PROJECT DATA
+============
+
+The project includes these supplied datasets:
+
+1. cumulative_2025.10.04_06.36.28 (1).csv
+
+NASA/Kepler dataset containing:
+
+9,564 observations
+
+49 columns
+
+Disposition categories:
+
+CONFIRMED
+FALSE POSITIVE
+CANDIDATE
+
+2. arcnave_candidate_predictions_adaptive.csv
+
+Contains:
+
+1,979 candidate observations
+
+Fields:
+
+kepid
+koi_disposition
+CONFIRMED_Prob
+AI_Prediction
+
+3. arcnave_prediction.csv
+
+Contains the candidates classified as CONFIRMED by the ARCNAVE model.
+
+Use these actual datasets where appropriate.
+
+Do not expose unnecessary raw CSV data directly to the browser if an API can provide the required information.
+
+==================================================
+FINAL USER EXPERIENCE
+=====================
+
+The complete experience should feel like:
+
+A DIGITAL EXOPLANET OBSERVATORY.
+
+User opens ARCNAVE.
+
+They see:
+
+SEARCH THE SKY.
+FIND THE SIGNAL.
+
+They click:
+
+START AI ANALYSIS
+
+They enter observation parameters.
+
+The frontend communicates with the existing backend.
+
+The Random Forest model analyzes the observation.
+
+The result appears as a professional scientific classification.
+
+The user can then explore related candidates and analytics.
+
+The final application should look impressive in a college project demonstration while still feeling scientifically responsible and technically credible.
+
+Before completing the task:
+
+1. Run the application.
+2. Verify all routes.
+3. Verify responsive layouts.
+4. Verify API integration.
+5. Verify prediction form.
+6. Verify error handling.
+7. Verify candidate explorer.
+8. Verify analytics.
+9. Remove broken links/buttons.
+10. Ensure there are no fake production prediction values.
+11. Ensure the existing backend/model remains intact.
+12. Provide a short summary of what you changed and how to configure VITE_API_BASE_URL.

@@ -1,0 +1,1 @@
+- [Preview workflow](preview-workflow.md) — start the FastAPI service before the production Vite preview to avoid initial proxy failures.

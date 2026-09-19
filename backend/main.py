@@ -7,8 +7,11 @@ No new model is trained — the pre-trained exo_planet.pkl is loaded at startup.
 
 import os
 import pickle
+import csv
 import numpy as np
 from contextlib import asynccontextmanager
+from functools import lru_cache
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -32,6 +35,9 @@ FEATURE_COLS = [
 LABEL_MAP = {1: "CONFIRMED", 0: "FALSE POSITIVE"}
 
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "exo_planet.pkl")
+DATA_DIR = Path(__file__).resolve().parents[1] / "arcnave" / "data"
+CANDIDATE_FILE = DATA_DIR / "arcnave_candidate_predictions_adaptive.csv"
+DATASET_FILE = DATA_DIR / "cumulative_2025.10.04_06.36.28.csv"
 
 # ─────────────────────────────────────────────────────────────────────
 # Global model reference (populated on startup)
@@ -123,6 +129,67 @@ class HealthResponse(BaseModel):
     model_loaded: bool
 
 
+class CandidatePage(BaseModel):
+    items: list[dict]
+    total: int
+    page: int
+    page_size: int
+
+
+def _to_float(value: str | None) -> float | None:
+    try:
+        return round(float(value), 6) if value not in (None, "") else None
+    except (TypeError, ValueError):
+        return None
+
+
+@lru_cache(maxsize=1)
+def _candidate_records() -> list[dict]:
+    if not CANDIDATE_FILE.exists():
+        return []
+    with CANDIDATE_FILE.open(newline="", encoding="utf-8-sig") as handle:
+        return [
+            {
+                "kepid": str(row["kepid"]),
+                "original_status": row["koi_disposition"],
+                "ai_prediction": row["AI_Prediction"],
+                "confirmed_probability": _to_float(row["CONFIRMED_Prob"]) or 0,
+            }
+            for row in csv.DictReader(handle)
+        ]
+
+
+@lru_cache(maxsize=1)
+def _dataset_stats() -> dict:
+    counts = {"CONFIRMED": 0, "FALSE POSITIVE": 0, "CANDIDATE": 0}
+    if DATASET_FILE.exists():
+        with DATASET_FILE.open(encoding="utf-8-sig") as handle:
+            rows = (line for line in handle if not line.startswith("#"))
+            for row in csv.DictReader(rows):
+                disposition = row.get("koi_disposition", "")
+                if disposition in counts:
+                    counts[disposition] += 1
+    candidates = _candidate_records()
+    ai_counts = {
+        "CONFIRMED": sum(item["ai_prediction"] == "CONFIRMED" for item in candidates),
+        "FALSE POSITIVE": sum(item["ai_prediction"] == "FALSE POSITIVE" for item in candidates),
+    }
+    bands = [
+        {"label": "0–25%", "count": sum(item["confirmed_probability"] < 0.25 for item in candidates)},
+        {"label": "25–50%", "count": sum(0.25 <= item["confirmed_probability"] < 0.5 for item in candidates)},
+        {"label": "50–75%", "count": sum(0.5 <= item["confirmed_probability"] < 0.75 for item in candidates)},
+        {"label": "75–100%", "count": sum(item["confirmed_probability"] >= 0.75 for item in candidates)},
+    ]
+    return {
+        "total_observations": sum(counts.values()),
+        "disposition": counts,
+        "ai_classification": ai_counts,
+        "probability_bands": bands,
+        "ai_confirmed": ai_counts["CONFIRMED"],
+        "ai_false_positive": ai_counts["FALSE POSITIVE"],
+    }
+
+
 # ─────────────────────────────────────────────────────────────────────
 # Endpoints
 # ─────────────────────────────────────────────────────────────────────
@@ -133,6 +200,54 @@ async def health():
         status="ok",
         model_loaded=model is not None,
     )
+
+
+@app.get("/analytics")
+async def analytics():
+    """Return statistics calculated from the supplied project datasets."""
+    return _dataset_stats()
+
+
+@app.get("/candidates", response_model=CandidatePage)
+async def candidates(
+    search: str = "",
+    status: str = "ALL",
+    probability: str = "ALL",
+    sort: str = "probability_desc",
+    page: int = 1,
+    page_size: int = 10,
+):
+    """Search and page through the supplied candidate prediction dataset."""
+    page = max(page, 1)
+    page_size = min(max(page_size, 1), 50)
+    records = _candidate_records()
+    needle = search.strip().lower()
+    if needle:
+        records = [item for item in records if needle in item["kepid"].lower()]
+    if status != "ALL":
+        records = [item for item in records if item["ai_prediction"] == status]
+    if probability != "ALL":
+        ranges = {"0-25": (0, 0.25), "25-50": (0.25, 0.5), "50-75": (0.5, 0.75), "75-100": (0.75, 1.000001)}
+        low, high = ranges.get(probability, (0, 1.000001))
+        records = [item for item in records if low <= item["confirmed_probability"] < high]
+    if sort == "kepid":
+        records.sort(key=lambda item: item["kepid"])
+    elif sort == "probability_asc":
+        records.sort(key=lambda item: item["confirmed_probability"])
+    else:
+        records.sort(key=lambda item: item["confirmed_probability"], reverse=True)
+    total = len(records)
+    start = (page - 1) * page_size
+    return CandidatePage(items=records[start : start + page_size], total=total, page=page, page_size=page_size)
+
+
+@app.get("/candidates/{kepid}")
+async def candidate_detail(kepid: str):
+    """Return one record from the supplied candidate prediction dataset."""
+    for item in _candidate_records():
+        if item["kepid"] == kepid:
+            return item
+    raise HTTPException(status_code=404, detail="Candidate not found.")
 
 
 @app.post("/predict", response_model=PredictResponse)
