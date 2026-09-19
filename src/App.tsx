@@ -53,15 +53,15 @@ const fields = [
 ] as const;
 
 const initialObservation: Observation = {
-  koi_period: "9.48803590",
-  koi_time0bk: "170.538750",
-  koi_duration: "2.95320",
-  koi_depth: "615.8",
-  koi_prad: "2.26",
-  koi_model_snr: "35.8",
-  koi_steff: "5455.0",
-  koi_srad: "0.927",
-  koi_kepmag: "15.347",
+  koi_period: "",
+  koi_time0bk: "",
+  koi_duration: "",
+  koi_depth: "",
+  koi_prad: "",
+  koi_model_snr: "",
+  koi_steff: "",
+  koi_srad: "",
+  koi_kepmag: "",
 };
 
 function scrollTo(id: string) {
