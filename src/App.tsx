@@ -153,7 +153,7 @@ function Hero({ analytics }: { analytics: Analytics | null }) {
     <section className="hero section-shell" id="mission">
       <div className="hero-copy">
         <div className="eyebrow"><span className="eyebrow-dot" /> ARCNAVE / EXOPLANET INTELLIGENCE</div>
-        <h1>SEARCH THE SKY.<br /><span>FIND THE SIGNAL.</span></h1>
+        <h1>BEYOND THE STARS.<br /><span>IN SEARCH OF WORLDS.</span></h1>
         <p className="hero-lede">Explore Kepler observations and analyze planetary candidates using machine learning built for the next generation of discovery.</p>
         <div className="hero-actions">
           <button className="button button-primary" onClick={() => scrollTo("predictor")}>Start AI analysis <ArrowRight size={17} /></button>
